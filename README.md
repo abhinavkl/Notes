@@ -1,0 +1,3 @@
+# Notes
+
+Dotnet Angular Project
