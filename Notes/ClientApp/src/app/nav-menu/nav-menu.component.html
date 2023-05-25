@@ -27,14 +27,15 @@
           >
             <a class="nav-link text-white" [routerLink]="['/']">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/counter']"
-              >Counter</a
+          
+          <li *ngIf="router.url!=='/login'" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white" [routerLink]="['/login']"
+              >Login</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/fetch-data']"
-              >Fetch data</a
+          <li *ngIf="router.url!=='/register'" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white" [routerLink]="['/register']"
+              >Register</a
             >
           </li>
         </ul>
