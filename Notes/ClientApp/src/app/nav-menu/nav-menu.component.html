@@ -28,13 +28,13 @@
             <a class="nav-link text-white" [routerLink]="['/']">Home</a>
           </li>
           
-          <li *ngIf="router.url!=='/login'" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/login']"
+          <li *ngIf="router.url!=='/auth/login'" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white" [routerLink]="['/auth/login']"
               >Login</a
             >
           </li>
-          <li *ngIf="router.url!=='/register'" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/register']"
+          <li *ngIf="router.url!=='/auth/register'" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white" [routerLink]="['/auth/register']"
               >Register</a
             >
           </li>
