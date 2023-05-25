@@ -13,6 +13,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { NotesModule } from './components/notes/notes.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './components/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -20,16 +21,15 @@ import { AppRoutingModule } from './app-routing.module';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
-    LoginComponent,
-    RegisterComponent 
-   ],
+    FetchDataComponent
+    ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    NotesModule
+    NotesModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
