@@ -21,4 +21,18 @@ export class NavMenuService{
         this.timeLeft=0;
     }
 
+    get getTimeLeft(){
+        return this.format(this.timeLeft)
+    }
+
+    padTime(time:number){
+        return String(time).length === 1 ? `0${time}` : `${time}`;
+    };
+    
+    format(time:number){
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        return `${minutes}:${this.padTime(seconds)}`;
+    }
+
 }

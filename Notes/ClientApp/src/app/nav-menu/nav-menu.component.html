@@ -42,7 +42,10 @@
             >
           </li>
         </ul>
-        <div *ngIf="authService.authenticated && navmenuService.timeLeft" >{{ navmenuService.timeLeft }}</div>
+        <div 
+        [className]="(navmenuService.timeLeft>90? 'bg-success':'bg-danger')+' badge p-2'"
+        *ngIf="authService.authenticated && navmenuService.timeLeft" 
+        >{{ navmenuService.getTimeLeft }}</div>
       </div>
     </div>
   </nav>
