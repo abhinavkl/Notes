@@ -37,7 +37,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(builder.Configuration.GetValue<Int32>("SessionExpireMinutes"));
 });
 
 builder.Services.AddAuthorization(options =>
@@ -59,6 +59,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

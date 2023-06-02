@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  public responseMessage:ResponseMessage=ResponseMessage.default;
+  responseMessage:ResponseMessage=ResponseMessage.default;
   registerForm: FormGroup = new FormGroup({});
   passwordValidator: RegExp = /^\S*(?=\S{8,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/;
   nameValidator: RegExp = /^[A-Z][a-zA-Z ]+$/;
@@ -64,9 +64,8 @@ export class RegisterComponent implements OnInit {
       this.registerForm.get('password')!.value,
       this.registerForm.get('confirmpassword')!.value
     );
-    console.log(register)
-    this.authService.registerUser(register).subscribe(data=>{
-      this.responseMessage=data as ResponseMessage;
+    this.authService.registerUser(register).subscribe(response=>{
+      this.responseMessage=response;
       if(this.responseMessage.statusCode===1){
         setTimeout(()=>{
           this.router.navigate(['/auth/login'])

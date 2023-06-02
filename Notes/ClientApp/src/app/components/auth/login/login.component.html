@@ -1,40 +1,84 @@
-<div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
-        <div class="container">
-            <div class="row align-items-center m-2">
-                <div class="col-3">
-                    <label for="email">Email</label>
+<form [formGroup]="loginForm" (submit)="onSubmit()" action="post">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="container">
+                <div *ngIf="responseMessage && responseMessage.message"  class="row align-items-center m-2">
+                    <div [className]="'alert alert-'+responseMessage.type">
+                        <div>{{responseMessage.message}}</div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <input type="text" name="email" id="email" class="form-control">
-                    <span field-validation-for="email"></span>
+                <div class="row align-items-center m-2">
+                    <div class="col-3">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" 
+                        formControlName="email" 
+                        class="form-control"
+                        (focus)="showEmailValidators=false"
+                        (blur)="showEmailValidators=true"
+                    >
+                        <span
+                         class="text-danger"
+                         *ngIf="
+                         showEmailValidators && !loginForm.get('email')!.valid
+                         "
+                         field-validation-for="email"
+                        >
+                        Email is invalid.
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="row align-items-center m-2">
-                <div class="col-3">
-                    <label for="password">Password</label>
+                <div class="row align-items-center m-2">
+                    <div class="col-3">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="col-6">
+                        <input 
+                            type="password" 
+                            formControlName="password" 
+                            class="form-control"
+                            (focus)="showPasswordValidators=false"
+                            (blur)="showPasswordValidators=true"
+                            >
+                        <span 
+                            class="text-danger"
+                            *ngIf="showPasswordValidators && !loginForm.get('password')!.valid"
+                            field-validation-for="password"
+                        >
+                            Password is required.
+                        </span>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <input type="password" name="password" id="password" class="form-control">
-                    <span field-validation-for="password"></span>
+                <div class="row align-items-center m-2">
+                    <div class="col-3">
+                        <label for="rememberme">Remember Me</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="checkbox" formControlName="rememberme" class="form-check-input">
+                    </div>
                 </div>
-            </div>
-            <div class="row align-items-center m-2">
-                <div class="col">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col" style="text-align-last: center;">
-                                <div>
-                                    <button class="btn btn-primary m-2" type="submit">Login</button>  
-                                    <button class="btn btn-secondary m-2" type="reset">Reset</button>                
+                <div class="row align-items-center m-2">
+                    <div class="col">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col" style="text-align-last: center;">
+                                    <div>
+                                        <button 
+                                        class="btn btn-primary m-2" 
+                                        type="submit"
+                                        [disabled]="!loginForm.valid || !showPasswordValidators || !showEmailValidators"
+                                        >Login</button>  
+                                        <button class="btn btn-secondary m-2" type="reset">Reset</button>                
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>    
+                </div>    
+            </div>
         </div>
+        <div class="col-2"></div>
     </div>
-    <div class="col-2"></div>
-</div>
+</form>

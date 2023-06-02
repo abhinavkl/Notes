@@ -27,21 +27,22 @@
           >
             <a class="nav-link text-white" [routerLink]="['/']">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-white" [routerLink]="['/fetch-data']"
-              >Fetch</a>
-            </li>          
-          <li *ngIf="router.url!=='/auth/login'" class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" *ngIf="authService.authenticated" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white" style="cursor: pointer;" (click)="logout()"
+              >Logout</a>
+          </li>          
+          <li *ngIf=" !authService.authenticated && router.url!=='/auth/login'" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-white" [routerLink]="['/auth/login']"
               >Login</a
             >
           </li>
-          <li *ngIf="router.url!=='/auth/register'" class="nav-item" [routerLinkActive]="['link-active']">
+          <li *ngIf="!authService.authenticated && router.url!=='/auth/register'" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-white" [routerLink]="['/auth/register']"
               >Register</a
             >
           </li>
         </ul>
+        <div *ngIf="authService.authenticated && navmenuService.timeLeft" >{{ navmenuService.timeLeft }}</div>
       </div>
     </div>
   </nav>
