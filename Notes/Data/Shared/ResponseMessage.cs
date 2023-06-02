@@ -15,7 +15,7 @@ namespace Notes.Models
         {
             get
             {
-                switch(StatusCode)
+                switch (StatusCode)
                 {
                     case ResponseStatus.UNKNOWN:
                     case ResponseStatus.SUCCESS:
@@ -31,7 +31,13 @@ namespace Notes.Models
             }
         }
         public object Data { get; set; }
-        public bool HasData { get; set; }
+        public bool HasData
+        {
+            get
+            {
+                return Data!= null;
+            }
+        }
     }
 
     public enum ResponseStatus
