@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
           this.navmenuService.updateTimeLeft(data.expiresIn)
         }
         else{
+          this.navmenuService.setTimeLeft(0)
           this.authService.clearSessionTimers()
         }
     })

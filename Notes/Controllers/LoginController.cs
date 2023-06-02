@@ -48,6 +48,17 @@ namespace Notes.Controllers
 
                 var expireTimeSpan = expiresIn.Subtract(DateTime.Now);
 
+                if (expireTimeSpan.TotalSeconds <= 0)
+                {
+                    await userManager.RemoveClaimsAsync(user, claims.Where(i => i.Type == "expires_at"));
+
+                    return new JsonResult(new
+                    {
+                        IsAuthenticated = false,
+                        HasException = false
+                    });
+                }
+
                 return new JsonResult(new
                 {
                     isAuthenticated = true,
