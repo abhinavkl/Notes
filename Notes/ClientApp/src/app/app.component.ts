@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { AuthService } from './components/auth/auth.service';
-import { NavMenuService } from './nav-menu/nav-menu.service';
+import { AuthService } from './components/services/auth.service';
+import { NavMenuService } from './components/services/nav-menu.service';
 
 @Component({
   selector: 'app-root',
@@ -16,15 +16,19 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getUserSession().subscribe(data=>{
-        if(data.isAuthenticated){
-          this.authService.setIsAuthenticate(true)
-          this.authService.userDetails=data.user
-          this.navmenuService.updateTimeLeft(data.expiresIn)
+    this.authService.getUserSession().subscribe(response=>{
+        if(response.isAuthenticated) {
+          sessionStorage.setItem('isAuthenticated','true')
+          sessionStorage.setItem('claims',JSON.stringify(response.user.claims))
+          sessionStorage.setItem('roles',JSON.stringify(response.user.roles))
+  
+          this.authService.isAuthenticated=true;
+          this.authService.userDetails.next(response.user)
+          this.navmenuService.updateTimeLeft(response.expiresIn)
         }
         else{
-          this.navmenuService.setTimeLeft(0)
-          this.authService.clearSessionTimers()
+          this.navmenuService.clear()
+          this.authService.clear()
         }
     })
   }

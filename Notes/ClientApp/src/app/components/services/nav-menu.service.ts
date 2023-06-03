@@ -1,9 +1,14 @@
 import { Injectable } from "@angular/core";
+import { AuthService } from './auth.service';
 
 @Injectable({providedIn:'root'})
 export class NavMenuService{
     timeLeft=0;
     timer?:ReturnType<typeof setInterval>=undefined;
+
+    constructor(
+        public authService:AuthService
+    ){}
 
     updateTimeLeft(time:number){
         this.timeLeft=time;
@@ -12,12 +17,13 @@ export class NavMenuService{
                 this.timeLeft--;
             }
             else{
+                this.authService.clear()
                 clearInterval(this.timer)
             }
         },1000)
     }
 
-    setTimeLeft(time:number){
+    clear(){
         this.timeLeft=0;
     }
 

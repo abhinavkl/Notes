@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from 'src/app/directives/custom-validator.directive';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Register } from './register.model';
 import { ResponseMessage } from 'src/app/shared/response-message.model';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  responseMessage:ResponseMessage=ResponseMessage.default;
+  responseMessage:ResponseMessage=new ResponseMessage();
   registerForm: FormGroup = new FormGroup({});
   passwordValidator: RegExp = /^\S*(?=\S{8,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/;
   nameValidator: RegExp = /^[A-Z][a-zA-Z ]+$/;

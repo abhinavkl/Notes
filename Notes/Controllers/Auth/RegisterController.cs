@@ -9,7 +9,7 @@ using Notes.Data.Authentication;
 using Notes.Models;
 using System.Security.Claims;
 
-namespace Notes.Controllers
+namespace Notes.Controllers.Auth
 {
     [Route("[controller]")]
     [ApiController]
@@ -25,10 +25,10 @@ namespace Notes.Controllers
         }
 
         [HttpGet]
-        public bool Get(string email="")
+        public bool Get(string email = "")
         {
-            email = !string.IsNullOrWhiteSpace(email)? email.ToLower():"";
-            return userManager.Users.Any(i=>i.Email.Equals(email));
+            email = !string.IsNullOrWhiteSpace(email) ? email.ToLower() : "";
+            return userManager.Users.Any(i => i.Email.Equals(email));
         }
 
         [HttpPost]
@@ -77,6 +77,10 @@ namespace Notes.Controllers
                         if (user.Email == configuration.GetValue<string>("AdminMail"))
                         {
                             claims.Add(new Claim("Admin", "true"));
+                        }
+                        else
+                        {
+                            claims.Add(new Claim("User", "true"));
                         }
 
                         await userManager.AddClaimsAsync(user, claims);

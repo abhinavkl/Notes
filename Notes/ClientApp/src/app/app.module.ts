@@ -12,6 +12,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NotesModule } from './components/notes/notes.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './components/auth/auth.module';
+import { AccessDeniedComponent } from './shared/access-denied//access-denied.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -19,14 +21,16 @@ import { AuthModule } from './components/auth/auth.module';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    AccessDeniedComponent
     ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     AppRoutingModule,
     NotesModule,
-    AuthModule
+    AuthModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

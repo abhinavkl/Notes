@@ -3,7 +3,7 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Notes</a>
+      <a class="navbar-brand" [routerLink]="['/']">Home</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -20,23 +20,20 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-white" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" *ngIf="authService.authenticated" [routerLinkActive]="['link-active']">
+          <li class="nav-item" *ngIf="authService.isAuthenticated" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white" style="cursor: pointer;" [routerLink]="['/notes']"
+              >Notes</a>
+          </li>          
+          <li class="nav-item" *ngIf="authService.isAuthenticated" [routerLinkActive]="['link-active']">
             <a class="nav-link text-white" style="cursor: pointer;" (click)="logout()"
               >Logout</a>
           </li>          
-          <li *ngIf=" !authService.authenticated && router.url!=='/auth/login'" class="nav-item" [routerLinkActive]="['link-active']">
+          <li *ngIf=" !authService.isAuthenticated && router.url!=='/auth/login'" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-white" [routerLink]="['/auth/login']"
               >Login</a
             >
           </li>
-          <li *ngIf="!authService.authenticated && router.url!=='/auth/register'" class="nav-item" [routerLinkActive]="['link-active']">
+          <li *ngIf="!authService.isAuthenticated && router.url!=='/auth/register'" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-white" [routerLink]="['/auth/register']"
               >Register</a
             >
@@ -44,7 +41,7 @@
         </ul>
         <div 
         [className]="(navmenuService.timeLeft>90? 'bg-success':'bg-danger')+' badge p-2'"
-        *ngIf="authService.authenticated && navmenuService.timeLeft" 
+        *ngIf="authService.isAuthenticated && navmenuService.timeLeft" 
         >{{ navmenuService.getTimeLeft }}</div>
       </div>
     </div>

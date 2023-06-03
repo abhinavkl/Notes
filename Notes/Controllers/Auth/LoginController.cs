@@ -8,7 +8,7 @@ using Notes.Models;
 using System.Configuration;
 using System.Security.Claims;
 
-namespace Notes.Controllers
+namespace Notes.Controllers.Auth
 {
     [Route("[controller]")]
     [ApiController]
@@ -42,9 +42,17 @@ namespace Notes.Controllers
                 var id = User.Identity.GetUserId();
                 var user = await userManager.FindByIdAsync(id);
                 var claims = await userManager.GetClaimsAsync(user);
-                var expiresAt = claims.Where(i => i.Type == "expires_at").FirstOrDefault().Value;
+                var expiresAt = claims.Where(i => i.Type == "expires_at").FirstOrDefault();
+                if (expiresAt == null)
+                {
+                    return new JsonResult(new
+                    {
+                        IsAuthenticated = false,
+                        HasException = false
+                    });
+                }
 
-                var expiresIn = DateTime.Parse(expiresAt);
+                var expiresIn = DateTime.Parse(expiresAt.Value);
 
                 var expireTimeSpan = expiresIn.Subtract(DateTime.Now);
 

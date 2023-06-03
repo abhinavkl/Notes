@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseMessage } from 'src/app/shared/response-message.model';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Login } from './login.model';
-import { NavMenuService } from 'src/app/nav-menu/nav-menu.service';
 import { environment } from 'src/environments/environment';
+import { UserDetails } from '../user.model';
+import { NavMenuService } from '../../services/nav-menu.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  responseMessage=ResponseMessage.default;
+  responseMessage=new ResponseMessage();
   loginForm:FormGroup=new FormGroup({})
 
   showEmailValidators = false;
@@ -51,8 +52,15 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(login).subscribe(response=>{
       this.responseMessage=response;
       if(this.responseMessage.statusCode===1){
-        this.authService.setIsAuthenticate(true)
+        let userDetails=(response.data as any).user as UserDetails
+
+        sessionStorage.setItem('isAuthenticated','true')
+        sessionStorage.setItem('claims',JSON.stringify(userDetails.claims))
+        sessionStorage.setItem('roles',JSON.stringify(userDetails.roles))
+
+        this.authService.isAuthenticated=true;
         this.navmenuService.updateTimeLeft(environment.SessionTimeS)
+        this.authService.userDetails.next(userDetails)
         setTimeout(()=>{
           this.router.navigate(['/'])
         },1000)

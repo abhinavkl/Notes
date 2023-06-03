@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../components/auth/auth.service';
-import { NavMenuService } from './nav-menu.service';
+import { AuthService } from '../components/services/auth.service';
+import { NavMenuService } from '../components/services/nav-menu.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -15,8 +15,7 @@ export class NavMenuComponent {
     public router:Router,
     public authService:AuthService,
     public navmenuService:NavMenuService
-  ){
-  }
+  ){}
 
   collapse() {
     this.isExpanded = false;
@@ -28,8 +27,7 @@ export class NavMenuComponent {
 
   logout(){
     this.authService.logout().subscribe(()=>{
-      this.authService.setIsAuthenticate(false)
-      this.authService.clearSessionTimers()
+      this.authService.clear()
     })
   }
 }

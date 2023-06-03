@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Notes.Data.Account;
 using Notes.Models;
 
-namespace Notes.Controllers
+namespace Notes.Controllers.Auth
 {
     [Route("[controller]")]
     [ApiController]

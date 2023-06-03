@@ -1,3 +1,4 @@
+import { KeyValuePair } from "./route-data.model";
 
 export class UserSession{
     constructor(
@@ -19,20 +20,14 @@ export class User{
 
 export class UserDetails{
     constructor(
-        public firstName:string,
-        public lastName:string,
-        public email:string,
-        public fullName:string,
-        public userId:string,
-        public isAdmin:boolean,
-        public expiresAt:string
+        public firstName:string='',
+        public lastName:string='',
+        public email:string='',
+        public fullName:string='',
+        public userId:string='',
+        public claims:string[]=[],
+        public roles:string[]=[]
     ){}
-
-    //202 to 301
-    static get default(){
-        return new UserDetails('','','','','',false,'')
-    }
-
 }
 
 
