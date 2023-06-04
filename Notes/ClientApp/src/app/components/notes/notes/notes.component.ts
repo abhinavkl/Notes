@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NoteService } from '../../services/notes.service';
+import { NoteService } from '../../../services/notes.service';
 import { Note } from '../note.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -16,7 +16,6 @@ export class NotesComponent implements OnInit{
     ngOnInit(): void {
       this.noteService.getNotes().subscribe((notes)=>{
         this.notes=notes;
-        console.log(notes)
       })
     }
 

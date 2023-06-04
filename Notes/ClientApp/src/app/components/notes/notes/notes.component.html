@@ -1,3 +1,15 @@
-<p *ngFor="let note of notes">
-    {{note.description}}
-</p>
+<div class="row">
+    <div class="col-3">
+        <button
+            class="btn btn-primary m-2"        
+        >
+            Add Note
+        </button>
+        <p *ngFor="let note of notes">
+            <app-short-note [note]="note"></app-short-note>
+        </p>
+    </div>
+    <div class="col-9">
+        Select a note to show the content.
+    </div>
+</div>

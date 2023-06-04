@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './components/auth/auth.module';
 import { AccessDeniedComponent } from './shared/access-denied//access-denied.component';
 import { CommonModule } from '@angular/common';
+import { PipeModule } from './pipes/pipe.module';
 
 @NgModule({
   declarations: [

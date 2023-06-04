@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotesComponent } from './notes/notes.component';
 import { ShortNoteComponent } from './short-note/short-note.component';
+import { PipeModule } from 'src/app/pipes/pipe.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { ShortNoteComponent } from './short-note/short-note.component';
     ShortNoteComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PipeModule
   ]
 })
 export class NotesModule { }

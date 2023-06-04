@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { CanActivate, CanActivateChild, CanDeactivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route, UrlSegment } from "@angular/router";
 import { Observable } from "rxjs";
 import { AuthService } from './auth.service';
-import { RouteData } from "../auth/route-data.model";
+import { RouteData } from "../components/auth/route-data.model";
 import { commonCount } from "src/app/shared/functions";
 
 @Injectable({providedIn:'root'})

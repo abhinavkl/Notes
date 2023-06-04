@@ -40,10 +40,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ExpireTimeSpan = TimeSpan.FromMinutes(builder.Configuration.GetValue<Int32>("SessionExpireMinutes"));
 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Admin", policy => policy.RequireClaim("Admin"));
-});
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("Admin", policy => policy.RequireClaim("Admin"));
+//});
 
 
 var app = builder.Build();

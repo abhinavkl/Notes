@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../components/services/auth.service';
-import { NavMenuService } from '../components/services/nav-menu.service';
+import { AuthService } from '../services/auth.service';
+import { NavMenuService } from '../services/nav-menu.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -28,6 +28,8 @@ export class NavMenuComponent {
   logout(){
     this.authService.logout().subscribe(()=>{
       this.authService.clear()
+
+      this.router.navigate(['login'])
     })
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { AuthService } from './components/services/auth.service';
-import { NavMenuService } from './components/services/nav-menu.service';
+import { AuthService } from './services/auth.service';
+import { NavMenuService } from './services/nav-menu.service';
+import { NoteService } from './services/notes.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private authService:AuthService,
-    private navmenuService:NavMenuService  
+    private navmenuService:NavMenuService,
+    private noteService:NoteService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +30,8 @@ export class AppComponent implements OnInit {
         }
         else{
           this.navmenuService.clear()
-          this.authService.clear()
+          this.authService.clear()          
+          this.noteService.clear()
         }
     })
   }

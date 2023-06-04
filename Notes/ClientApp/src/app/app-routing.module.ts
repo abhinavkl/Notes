@@ -6,7 +6,7 @@ import { RegisterComponent } from "./components/auth/register/register.component
 import { CounterComponent } from "./counter/counter.component";
 import { FetchDataComponent } from "./fetch-data/fetch-data.component";
 import { AccessDeniedComponent } from "./shared/access-denied/access-denied.component";
-import { AuthGuard } from "./components/services/auth-guard";
+import { AuthGuard } from "./services/auth-guard";
 import { RouteData } from "./components/auth/route-data.model";
 
 const routes:Routes=[
@@ -22,7 +22,7 @@ const routes:Routes=[
     { path: 'fetch-data', 
         component: FetchDataComponent,
         canActivate:[AuthGuard],
-        data:new RouteData(['User','Admin'],[],[],[]) 
+        data:new RouteData(['Authenticated']) 
     },
     {path:'access-denied',component:AccessDeniedComponent}
 ]

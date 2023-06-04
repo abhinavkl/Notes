@@ -1,1 +1,18 @@
-<p>short-note works!</p>
+
+<div class="row border border-warning">
+    <div class="col">
+        <div class="row align-items-center">
+            <div class="col-9 fw-bold text-warning">
+                {{note.description}}
+            </div>
+            <div class="col-3 fst-italic" style="font-size: xx-small;color:gray">
+                {{note.updatedOn | updatedon}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-secondary">
+                {{note.content}}
+            </div>
+        </div>
+    </div>
+</div>

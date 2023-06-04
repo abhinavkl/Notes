@@ -74,14 +74,7 @@ namespace Notes.Controllers.Auth
                             new Claim("UserId",userId.ToString())
                         };
 
-                        if (user.Email == configuration.GetValue<string>("AdminMail"))
-                        {
-                            claims.Add(new Claim("Admin", "true"));
-                        }
-                        else
-                        {
-                            claims.Add(new Claim("User", "true"));
-                        }
+                        claims.Add(new Claim("Authenticated", "true"));
 
                         await userManager.AddClaimsAsync(user, claims);
 
@@ -105,7 +98,5 @@ namespace Notes.Controllers.Auth
             }
             return new JsonResult(message);
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Note } from '../note.model';
 
 @Component({
   selector: 'app-short-note',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./short-note.component.css']
 })
 export class ShortNoteComponent {
-
+  @Input() note:Note=new Note();
 }

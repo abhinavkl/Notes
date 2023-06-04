@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseMessage } from 'src/app/shared/response-message.model';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Login } from './login.model';
 import { environment } from 'src/environments/environment';
 import { UserDetails } from '../user.model';
-import { NavMenuService } from '../../services/nav-menu.service';
+import { NavMenuService } from '../../../services/nav-menu.service';
 
 @Component({
   selector: 'app-login',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from 'src/app/directives/custom-validator.directive';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Register } from './register.model';
 import { ResponseMessage } from 'src/app/shared/response-message.model';
 import { Observable } from 'rxjs';

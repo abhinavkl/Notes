@@ -4,8 +4,8 @@ export class Note{
         public noteId:number=0,
         public description:string='',
         public content:string='',
-        public createdOn:string='',
-        public updatedOn:string='',
+        public createdOn:Date=new Date(),
+        public updatedOn:Date=new Date(),
         public createdBy:number=0
     ){}
 }
