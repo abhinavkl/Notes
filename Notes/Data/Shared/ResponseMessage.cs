@@ -10,7 +10,7 @@ namespace Notes.Models
                 return ((ResponseStatus)this.StatusCode).ToString();
             }
         }
-        public ResponseStatus StatusCode { get; set; } = ResponseStatus.UNKNOWN;
+        public ResponseStatus StatusCode { get; set; } = ResponseStatus.SUCCESS;
         public string Type
         {
             get

@@ -29,7 +29,7 @@ export class NavMenuComponent {
     this.authService.logout().subscribe(()=>{
       this.authService.clear()
 
-      this.router.navigate(['login'])
+      this.router.navigate(['/auth/login'])
     })
   }
 }

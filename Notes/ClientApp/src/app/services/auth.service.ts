@@ -6,7 +6,6 @@ import { ResponseMessage } from "src/app/shared/response-message.model";
 import { UserDetails, UserSession } from '../components/auth/user.model';
 import { environment } from "src/environments/environment";
 import { BehaviorSubject } from "rxjs";
-import { NavMenuService } from "./nav-menu.service";
 import { NoteService } from "./notes.service";
 
 @Injectable({providedIn:'root'})

@@ -10,13 +10,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class NotesComponent implements OnInit{
 
-    notes:Note[]=[];
-    constructor(private noteService:NoteService){}
+    notes:Note[]=[];    
+    constructor(public noteService:NoteService){}
 
     ngOnInit(): void {
       this.noteService.getNotes().subscribe((notes)=>{
         this.notes=notes;
       })
+    }
+
+    newNote(){
+      this.noteService.selectedNote.next(new Note())
     }
 
 }

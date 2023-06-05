@@ -1,0 +1,88 @@
+<div *ngIf="note; else noteNotSelected">
+    <div *ngIf="!note.noteId || noteService.noteMode===mode.edit">
+        <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+            <div class="row m-1">
+                <div class="col">
+                    <div *ngIf="responseMessage && responseMessage.message" class="row align-items-center m-2">
+                        <div [className]="'alert alert-'+responseMessage.type">
+                            <div>{{responseMessage.message}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-1 align-items-center">
+                <div class="col-3 fw-bold">
+                    Description
+                </div>
+                <div class="col-9">
+                    <input type="text" id="description" formControlName="description" class="form-control"
+                        (focus)="showDescriptionErrors=false" (blur)="showDescriptionErrors=true" />
+                    <div *ngIf="
+                            showDescriptionErrors 
+                            && noteForm.get('description')!.touched
+                            && !noteForm.get('description')!.valid
+                             ">
+                        <span *ngIf="noteForm.get('description')!.errors!.required" class="text-danger">
+                            Description is required.
+                        </span>
+                        <span class="text-danger" *ngIf="noteForm.get('description')!.errors!.pattern">
+                            Only alphanumeric characters allowed.
+                        </span>
+                        <span class="text-danger" *ngIf="
+                                noteForm.get('description')!.errors!.maxlength
+                                || noteForm.get('description')!.errors!.minlength">
+                            Description min length of 3 and max length of 20
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 mx-1 my-1">
+                <div class="col">
+                    <label class="fw-bold" for="content">Body</label>
+                    <textarea class="form-control" formControlName="content" style="height: 15em;"
+                        (focus)="showContentErrors=false" (blur)="showContentErrors=true"></textarea>
+                    <div
+                        *ngIf="showContentErrors && noteForm.get('content')!.touched && !noteForm.get('content')!.valid">
+                        <span class="text-danger" *ngIf="noteForm.get('content')!.errors!.required">
+                            Body is required.
+                        </span>
+                        <span class="text-danger" *ngIf="noteForm.get('content')!.errors!.minlength">
+                            Body is of min length 10.
+                        </span>
+                        <span class="text-danger" *ngIf="noteForm.get('content')!.errors!.maxlength">
+                            Body is of max length 1000 only.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mx-1 my-1 mt-3">
+                <div class="col">
+                    <button class="btn btn-success">
+                        {{ note!.noteId?"Update":"Add" }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="noteService.noteMode===mode.view">
+        <div class="row mt-3 m-1 align-items-center">
+            <div class="col-3 fw-bold text-warning">
+                Description
+            </div>
+            <div class="col-9">
+                {{note.description}}
+            </div>
+        </div>
+        <div class="row mt-3 m-1">
+            <div class="col-12 fw-bold text-warning">
+                Body
+            </div>
+            <div class="col">
+                {{note.content}}
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #noteNotSelected>
+    Select a note to show the content.
+</ng-template>

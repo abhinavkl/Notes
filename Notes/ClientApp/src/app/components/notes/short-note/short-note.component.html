@@ -1,18 +1,45 @@
-
-<div class="row border border-warning">
+<div [className]="'row border '+(isSelected&&' border-5')" style="cursor: pointer;">
     <div class="col">
-        <div class="row align-items-center">
-            <div class="col-9 fw-bold text-warning">
-                {{note.description}}
-            </div>
-            <div class="col-3 fst-italic" style="font-size: xx-small;color:gray">
-                {{note.updatedOn | updatedon}}
+        <div class="row">
+            <div class="col" [style.visibility]="(noteService.selectedNote.value 
+            && noteService.selectedNote.value!.noteId===note.noteId)?'visible':'hidden'">
+                <div class="row">
+                    <div class="col">
+                        <div class="text-end">
+                            <button
+                                [className]="'btn m-2 '+(noteService.noteMode===mode.view?'btn-success':'btn-secondary')"
+                                (click)="noteService.noteMode=mode.view">
+                                V
+                            </button>
+                            <button
+                                [className]="'btn m-2 '+(noteService.noteMode===mode.edit?'btn-success':'btn-secondary')"
+                                (click)="noteService.noteMode=mode.edit">
+                                E
+                            </button>
+                            <button
+                                [className]="'btn m-2 '+(noteService.noteMode===mode.delete?'btn-success':'btn-secondary')"
+                                (click)="noteService.noteMode=mode.delete">
+                                D
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col text-secondary">
-                {{note.content}}
+        <div  (click)="noteSelectEvent()">
+            <div class="row align-items-center">
+                <div class="col-8 fw-bold text-warning">
+                    {{note.description}}
+                </div>
+                <div class="col-4 fst-italic" style="font-size: xx-small;color:gray">
+                    {{note.updatedOn | updatedon}}
+                </div>
             </div>
+            <div class="row">
+                <div class="col text-secondary">
+                    {{note.content}}
+                </div>
+            </div>    
         </div>
     </div>
 </div>
