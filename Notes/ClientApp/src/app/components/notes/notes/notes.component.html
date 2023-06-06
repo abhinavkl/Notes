@@ -5,22 +5,17 @@
         </button>
     </div>
 </div>
-<div *ngIf="!noteService.noteMode; else noteNotSelectedTemplate">
+<div>
     <div class="row">
-        <div class="col-3 m-2" *ngFor="let note of notes">
-            <app-short-note [note]="note"></app-short-note>
-        </div>
-    </div>
-</div>
-<ng-template #noteNotSelectedTemplate>
-    <div class="row">
-        <div class="col-3">
-            <div class="m-2" *ngFor="let note of notes">
-                <app-short-note [note]="note"></app-short-note>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-5 m-2 " *ngFor="let note of notes">
+                    <app-short-note [note]="note"></app-short-note>
+                </div>                        
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-6">
             <app-note-details></app-note-details>
         </div>
     </div>
-</ng-template>
+</div>

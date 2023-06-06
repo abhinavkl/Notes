@@ -1,32 +1,26 @@
 <div [className]="'row border '+(isSelected&&' border-5')" style="cursor: pointer;">
     <div class="col">
         <div class="row">
-            <div class="col" [style.visibility]="(noteService.selectedNote.value 
-            && noteService.selectedNote.value!.noteId===note.noteId)?'visible':'hidden'">
+            <div class="col" *ngIf="(noteService.selectedNote.value 
+            && noteService.selectedNote.value!.noteId===note.noteId)">
                 <div class="row">
                     <div class="col">
                         <div class="text-end">
-                            <button
-                                [className]="'btn m-2 '+(noteService.noteMode===mode.view?'btn-success':'btn-secondary')"
-                                (click)="noteService.noteMode=mode.view">
-                                V
-                            </button>
-                            <button
-                                [className]="'btn m-2 '+(noteService.noteMode===mode.edit?'btn-success':'btn-secondary')"
-                                (click)="noteService.noteMode=mode.edit">
-                                E
-                            </button>
-                            <button
-                                [className]="'btn m-2 '+(noteService.noteMode===mode.delete?'btn-success':'btn-secondary')"
-                                (click)="noteService.noteMode=mode.delete">
-                                D
-                            </button>
+                            <i [className]="'mx-2 my-2 fa fa-eye '+(noteService.noteMode===mode.view?'text-success':'text-secondary')"
+                                (click)="noteService.noteMode=(noteService.noteMode===mode.view)?mode.none:mode.view">
+                            </i>
+                            <i [className]="'mx-2 my-2 fa fa-pencil '+(noteService.noteMode===mode.edit?'text-success':'text-secondary')"
+                                (click)="noteService.noteMode=(noteService.noteMode===mode.edit)?mode.none:mode.edit">
+                            </i>
+                            <i [className]="'mx-2 my-2 fa fa-trash '+(noteService.noteMode===mode.delete?'text-success':'text-secondary')"
+                                (click)="noteService.noteMode=(noteService.noteMode===mode.delete)?mode.none:mode.delete">
+                            </i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div  (click)="noteSelectEvent()">
+        <div (click)="noteSelectEvent()">
             <div class="row align-items-center">
                 <div class="col-8 fw-bold text-warning">
                     {{note.description}}
@@ -39,7 +33,7 @@
                 <div class="col text-secondary">
                     {{note.content}}
                 </div>
-            </div>    
+            </div>
         </div>
     </div>
 </div>

@@ -15,6 +15,8 @@ import { AuthModule } from './components/auth/auth.module';
 import { AccessDeniedComponent } from './shared/access-denied//access-denied.component';
 import { CommonModule } from '@angular/common';
 import { PipeModule } from './pipes/pipe.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { PipeModule } from './pipes/pipe.module';
     AppRoutingModule,
     NotesModule,
     AuthModule,
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
