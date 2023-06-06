@@ -11,6 +11,7 @@ export class NoteService{
     notes=new BehaviorSubject<Note[]>([])
     selectedNote=new BehaviorSubject<Note | null>(null)
     noteMode=mode.none;
+    status=new ResponseMessage()
 
     constructor(private http:HttpClient,@Inject('BASE_URL') baseUrl: string){
         this.baseUrl=baseUrl;
@@ -36,14 +37,30 @@ export class NoteService{
             notes[index]=note;
         }
         else{
-            notes.push(note)
+            notes=[ note,...notes ]
         }
         console.log(notes)
         this.notes.next(notes)
     }
 
+    deleteNode(){
+        let noteId=this.selectedNote.value!.noteId
+        return this.http.delete<ResponseMessage>(this.baseUrl+'api/notes/'+noteId)
+    }
+
+    removeNote(noteId:number){
+        let notes=this.notes.value
+        let index=notes.findIndex(note=>note.noteId==noteId)
+        if(index!==-1){
+            notes.splice(index,1)
+            this.notes.next(notes)
+        }
+    }
 
     clear(){
         this.notes.next([])
+        this.selectedNote.next(null)
+        this.noteMode=mode.none
+        this.status=new ResponseMessage()
     }
 }

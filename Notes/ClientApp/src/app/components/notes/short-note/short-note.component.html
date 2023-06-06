@@ -1,37 +1,37 @@
-<div [className]="'row border '+(isSelected&&' border-5')" style="cursor: pointer;">
+<div [className]="'row border border-4 '+(isSelected&&'border-success')" style="cursor: pointer;">
     <div class="col">
-        <div class="row">
-            <div class="col" *ngIf="(noteService.selectedNote.value 
-            && noteService.selectedNote.value!.noteId===note.noteId)">
-                <div class="row">
-                    <div class="col">
-                        <div class="text-end">
-                            <i [className]="'mx-2 my-2 fa fa-eye '+(noteService.noteMode===mode.view?'text-success':'text-secondary')"
-                                (click)="noteService.noteMode=(noteService.noteMode===mode.view)?mode.none:mode.view">
-                            </i>
-                            <i [className]="'mx-2 my-2 fa fa-pencil '+(noteService.noteMode===mode.edit?'text-success':'text-secondary')"
-                                (click)="noteService.noteMode=(noteService.noteMode===mode.edit)?mode.none:mode.edit">
-                            </i>
-                            <i [className]="'mx-2 my-2 fa fa-trash '+(noteService.noteMode===mode.delete?'text-success':'text-secondary')"
-                                (click)="noteService.noteMode=(noteService.noteMode===mode.delete)?mode.none:mode.delete">
-                            </i>
-                        </div>
+        <div *ngIf="isSelected" style="height:2em;">
+            <div class="row">
+                <div class="col">
+                    <div class="text-end">
+                        <fa-icon [className]="'m-1 '+(noteService.noteMode===mode.view&&'text-success')"
+                            [icon]="viewIcon" (click)="changeMode(mode.view)">
+                            >
+                        </fa-icon>
+                        <fa-icon [className]="'m-1 '+(noteService.noteMode===mode.edit&&'text-success')"
+                            [icon]="editIcon" (click)="changeMode(mode.edit)">
+                            >
+                        </fa-icon>
+                        <fa-icon [className]="'m-1 '+(noteService.noteMode===mode.delete&&'text-success')"
+                            [icon]="deleteIcon" (click)="changeMode(mode.delete)">
+                            >
+                        </fa-icon>
                     </div>
                 </div>
             </div>
         </div>
-        <div (click)="noteSelectEvent()">
+        <div (click)="noteSelectEvent()" [style]="(isSelected?'height:8em':'height:10em')">
             <div class="row align-items-center">
-                <div class="col-8 fw-bold text-warning">
+                <div class="col-7 fw-bold text-warning">
                     {{note.description}}
                 </div>
-                <div class="col-4 fst-italic" style="font-size: xx-small;color:gray">
+                <div class="col-5 fst-italic" style="font-size: xx-small;color:gray">
                     {{note.updatedOn | updatedon}}
                 </div>
             </div>
             <div class="row">
-                <div class="col text-secondary">
-                    {{note.content}}
+                <div class="col text-secondary" style="font-size:small">
+                    {{note.content | textshorter:75 }}
                 </div>
             </div>
         </div>

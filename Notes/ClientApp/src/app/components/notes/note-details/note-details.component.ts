@@ -4,6 +4,7 @@ import { NoteService } from 'src/app/services/notes.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ResponseMessage } from 'src/app/shared/response-message.model';
 import {mode } from '../../../shared/page-mode.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-note-details',
@@ -16,7 +17,8 @@ export class NoteDetailsComponent implements OnInit {
   noteForm:FormGroup=new FormGroup({})
   responseMessage:ResponseMessage=new ResponseMessage()
 
-  nameValidator: RegExp = /^[a-zA-Z0-9][a-zA-Z0-9 ]+$/;
+  textareaMaxLength=environment.textareaMaxlength
+  nameValidator: RegExp = /^[a-zA-Z0-9][a-zA-Z0-9\/\- ]+$/;
 
   showDescriptionErrors=false;
   showContentErrors=false;
@@ -41,7 +43,7 @@ export class NoteDetailsComponent implements OnInit {
         updateOn:'blur'
       }],
       "content":[this.note?.content,{
-        validators:[Validators.minLength(10),Validators.required,Validators.maxLength(1000)],
+        validators:[Validators.minLength(10),Validators.required,Validators.maxLength(this.textareaMaxLength)],
         updateOn:'blur'
       }]
     })

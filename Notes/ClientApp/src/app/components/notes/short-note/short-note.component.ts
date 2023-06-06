@@ -2,6 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Note } from '../note.model';
 import { NoteService } from 'src/app/services/notes.service';
 import { mode } from 'src/app/shared/page-mode.model';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NoteDeleteComponent } from '../note-delete/note-delete.component';
+import { ResponseMessage } from 'src/app/shared/response-message.model';
 
 @Component({
   selector: 'app-short-note',
@@ -12,9 +16,13 @@ export class ShortNoteComponent implements OnInit {
   @Input() note: Note = new Note();
   isSelected: boolean = false;
   mode=mode;
+  editIcon=faEdit
+  viewIcon=faEye
+  deleteIcon=faTrash
 
   constructor(
-    public noteService: NoteService
+    public noteService: NoteService,
+    private modalServie:NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -23,8 +31,26 @@ export class ShortNoteComponent implements OnInit {
     })
   }
 
+  changeMode(actualMode:mode){
+    if(this.noteService.noteMode===actualMode){
+      this.noteService.noteMode=mode.none;
+    }
+    else{
+      this.noteService.noteMode=actualMode;
+      if(actualMode===mode.delete){
+        this.openDeletePopup()
+      }
+    }
+  }
+
+  openDeletePopup(){
+    const modelRef=this.modalServie.open(NoteDeleteComponent,{
+      backdrop:'static',
+      keyboard:false
+    })
+  }
+
   noteSelectEvent() {
-    console.log(this.note)
     if (this.noteService.selectedNote.value?.noteId === this.note.noteId) {
       this.noteService.selectedNote.next(null)
     }
@@ -33,5 +59,4 @@ export class ShortNoteComponent implements OnInit {
     }
     this.noteService.noteMode=mode.none;
   }
-
 }

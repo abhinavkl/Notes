@@ -1,5 +1,10 @@
 <div class="row">
     <div class="col-3">
+        <div *ngIf="noteService.status && noteService.status.message"  class="row align-items-center m-2">
+            <div [className]="'alert alert-'+noteService.status.type">
+                <div>{{noteService.status.message}}</div>
+            </div>
+        </div>
         <button class="btn btn-primary m-2" (click)="newNote()">
             Add Note
         </button>
@@ -8,7 +13,7 @@
 <div>
     <div class="row">
         <div class="col-6">
-            <div class="row">
+            <div class="row allNotes">
                 <div class="col-5 m-2 " *ngFor="let note of notes">
                     <app-short-note [note]="note"></app-short-note>
                 </div>                        

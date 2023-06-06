@@ -5,18 +5,24 @@ import { ShortNoteComponent } from './short-note/short-note.component';
 import { PipeModule } from 'src/app/pipes/pipe.module';
 import { NoteDetailsComponent } from './note-details/note-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DirectiveModule } from 'src/app/directives/directive.module';
+import { NoteDeleteComponent } from './note-delete/note-delete.component';
 
 @NgModule({
   declarations: [
     NotesComponent,
     ShortNoteComponent,
-    NoteDetailsComponent
+    NoteDetailsComponent,
+    NoteDeleteComponent
   ],
   imports: [
     CommonModule,
     PipeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    DirectiveModule
   ]
 })
 export class NotesModule { }

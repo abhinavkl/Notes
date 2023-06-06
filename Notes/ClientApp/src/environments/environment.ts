@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   SessionTimeMS:900000,
-  SessionTimeS:900
+  SessionTimeS:900,
+  textareaMaxlength:1000
 };
 
 /*

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Notes.Data;
@@ -11,6 +12,7 @@ namespace Notes.Controllers.Notes
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NotesController : ControllerBase
     {
         private readonly Microsoft.AspNetCore.Identity.SignInManager<User> signInManager;
@@ -18,8 +20,8 @@ namespace Notes.Controllers.Notes
         private readonly Microsoft.AspNetCore.Identity.UserManager<User> userManager;
         private readonly IConfiguration configuration;
         public NotesController(
-            IConfiguration configuration, 
-            Microsoft.AspNetCore.Identity.UserManager<User> userManager, 
+            IConfiguration configuration,
+            Microsoft.AspNetCore.Identity.UserManager<User> userManager,
             Microsoft.AspNetCore.Identity.SignInManager<User> signInManager,
             NotesContext notesContext)
         {
@@ -33,7 +35,7 @@ namespace Notes.Controllers.Notes
         public IEnumerable<Note> Get()
         {
             int userId = this.User.GetUserId();
-            return notesContext.Notes.Where(i=>i.CreatedBy==userId).OrderByDescending(i=>i.CreatedOn).ToList();
+            return notesContext.Notes.Where(i => i.CreatedBy == userId).OrderByDescending(i => i.CreatedOn).ToList();
         }
 
         [HttpPost]
@@ -42,7 +44,7 @@ namespace Notes.Controllers.Notes
             var message = new ResponseMessage();
             try
             {
-                Note note= JsonConvert.DeserializeObject<Note>(obj.ToString());
+                Note note = JsonConvert.DeserializeObject<Note>(obj.ToString());
                 if (!ModelState.IsValid)
                 {
                     message.Message = string.Join("; ", ModelState.Values
@@ -56,9 +58,9 @@ namespace Notes.Controllers.Notes
                     int userId = this.User.GetUserId();
                     note.UpdatedOn = DateTime.Now;
                     var dbNote = await notesContext.Notes.FindAsync(note.NoteId);
-                    if(dbNote== null)
+                    if (dbNote == null)
                     {
-                        note.CreatedBy=userId;
+                        note.CreatedBy = userId;
                         note.CreatedOn = DateTime.Now;
                         await notesContext.Notes.AddAsync(note);
                     }
@@ -73,6 +75,29 @@ namespace Notes.Controllers.Notes
                     await notesContext.SaveChangesAsync();
                     message.Data = note;
                 }
+            }
+            catch (Exception ex)
+            {
+                message.Message = ex.Message;
+                message.StatusCode = ResponseStatus.EXCEPTION;
+            }
+            return new JsonResult(message);
+        }
+
+
+        [HttpDelete("{noteId}")]
+        public async Task<JsonResult> Delete(int noteId)
+        {
+            var message = new ResponseMessage();
+            try
+            {
+                var note = await notesContext.Notes.FindAsync(noteId);
+                if (note != null)
+                {
+                    notesContext.Notes.Remove(note);
+                    notesContext.SaveChanges();
+                }
+                message.Message = "Note deleted successfully";
             }
             catch (Exception ex)
             {
