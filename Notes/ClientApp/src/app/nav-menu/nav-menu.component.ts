@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { NavMenuService } from '../services/nav-menu.service';
 import { NoteService } from '../services/notes.service';
+import { TagService } from '../services/tags.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -16,7 +17,8 @@ export class NavMenuComponent {
     public router:Router,
     public authService:AuthService,
     private noteService:NoteService,
-    public navmenuService:NavMenuService
+    public navmenuService:NavMenuService,
+    private tagService:TagService
   ){}
 
   collapse() {
@@ -32,6 +34,7 @@ export class NavMenuComponent {
       this.authService.clear()
       this.noteService.clear()
       this.navmenuService.clear()
+      this.tagService.clear()
       this.router.navigate(['/auth/login'])
     })
   }

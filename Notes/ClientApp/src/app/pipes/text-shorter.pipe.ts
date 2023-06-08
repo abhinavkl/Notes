@@ -9,7 +9,6 @@ export class TextShorter implements PipeTransform{
             return text;
         }
         else{
-            console.log(text,text.substring(maxlength))
             return text.substring(0,maxlength-3)+'...'
         }
     }

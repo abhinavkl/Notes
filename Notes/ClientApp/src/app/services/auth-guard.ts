@@ -16,6 +16,10 @@ export class AuthGuard {
     let url: string = state.url;
 
     let routeData=next.data as RouteData
+    if(!Object.keys(next.data).length)
+    {
+      routeData=new RouteData()
+    }
     let isAuthenticated=(/true/i).test(sessionStorage.getItem('isAuthenticated')??'')
     let userClaims = JSON.parse(sessionStorage.getItem('claims')??'[]') as string[]
     let userRoles= JSON.parse(sessionStorage.getItem('roles')??'[]') as string[]

@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DirectiveModule } from 'src/app/directives/directive.module';
 import { NoteDeleteComponent } from './note-delete/note-delete.component';
+import { CustomModule } from '../custom/custom.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NoteDeleteComponent } from './note-delete/note-delete.component';
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    DirectiveModule
+    DirectiveModule,
+    CustomModule
   ]
 })
 export class NotesModule { }

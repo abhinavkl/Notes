@@ -25,6 +25,10 @@
               >Notes</a>
           </li>          
           <li class="nav-item" *ngIf="authService.isAuthenticated" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-white" style="cursor: pointer;" [routerLink]="['/tags']"
+              >Tags</a>
+          </li>
+          <li class="nav-item" *ngIf="authService.isAuthenticated" [routerLinkActive]="['link-active']">
             <a class="nav-link text-white" style="cursor: pointer;" (click)="logout()"
               >Logout</a>
           </li>          

@@ -9,9 +9,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
   styleUrls: ['./notes.component.css']
 })
 export class NotesComponent implements OnInit{
+    notes:Note[]=[];  
 
-    notes:Note[]=[];    
-    constructor(public noteService:NoteService){}
+    constructor(
+      public noteService:NoteService
+    ){}
 
     ngOnInit(): void {
       this.noteService.getNotes().subscribe((notes)=>{

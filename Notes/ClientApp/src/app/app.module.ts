@@ -12,11 +12,11 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NotesModule } from './components/notes/notes.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './components/auth/auth.module';
-import { AccessDeniedComponent } from './shared/access-denied//access-denied.component';
 import { CommonModule } from '@angular/common';
 import { PipeModule } from './pipes/pipe.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { TagsModule } from './components/tags/tags.module';
+import { CustomModule } from './components/custom/custom.module';
 
 @NgModule({
   declarations: [
@@ -24,9 +24,8 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
-    AccessDeniedComponent
-    ],
+    FetchDataComponent
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -34,7 +33,9 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
     NotesModule,
     AuthModule,
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    TagsModule,
+    CustomModule
   ],
   providers: [],
   bootstrap: [AppComponent]

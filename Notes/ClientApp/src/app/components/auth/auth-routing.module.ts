@@ -10,8 +10,7 @@ const routes:Routes=[
     path:'',canActivateChild:[AuthGuard],children:[
       {path:'login',component:LoginComponent },
       {path:'register',component:RegisterComponent}    
-    ],
-    data:new RouteData()
+    ]
   }
 ]
 

@@ -11,6 +11,7 @@ const PROXY_CONFIG = [
       "/login",
       "/logout",
       "/api/notes",
+      "/api/tags"
    ],
     target: target,
     secure: false,

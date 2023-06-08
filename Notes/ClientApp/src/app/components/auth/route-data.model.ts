@@ -13,6 +13,18 @@ export class RouteData {
         this.authenticated ||= excludeClaims.length > 0;
         this.authenticated ||= excludeRoles.length > 0;
     }
+
+    static includeclaims(claims:string[]){
+        return new RouteData(claims)
+    }
+
+    static excludeclaims(claims:string[]){
+        return new RouteData([],[],claims)
+    }
+
+    static claims(include:string[],exclude:string[]){
+        return new RouteData(include,[],exclude)
+    }
 }
 
 export class KeyValuePair {

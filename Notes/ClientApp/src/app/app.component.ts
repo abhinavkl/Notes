@@ -4,6 +4,7 @@ import { filter } from 'rxjs';
 import { AuthService } from './services/auth.service';
 import { NavMenuService } from './services/nav-menu.service';
 import { NoteService } from './services/notes.service';
+import { TagService } from './services/tags.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService:AuthService,
     private navmenuService:NavMenuService,
-    private noteService:NoteService
+    private noteService:NoteService,
+    private tagService:TagService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit {
           this.navmenuService.clear()
           this.authService.clear()          
           this.noteService.clear()
+          this.tagService.clear()
         }
     })
   }
