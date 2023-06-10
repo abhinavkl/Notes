@@ -14,6 +14,7 @@ import { ResponseMessage } from 'src/app/shared/response-message.model';
 })
 export class ShortNoteComponent implements OnInit {
   @Input() note: Note = new Note();
+  @Input() maxbodylength:number=75;
   isSelected: boolean = false;
   mode=mode;
   editIcon=faEdit

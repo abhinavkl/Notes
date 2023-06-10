@@ -1,0 +1,4 @@
+.allNotes{
+    overflow-y: auto;
+    max-height: 30em;
+}

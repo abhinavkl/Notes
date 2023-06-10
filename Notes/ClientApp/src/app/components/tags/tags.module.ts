@@ -5,11 +5,14 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { DirectiveModule } from "src/app/directives/directive.module";
 import { PipeModule } from "src/app/pipes/pipe.module";
+import { TagDetailsComponent } from './tag-details/tag-details.component';
+import { NotesModule } from "../notes/notes.module";
 
 
 @NgModule({
     declarations:[
-    TagsComponent
+    TagsComponent,
+    TagDetailsComponent
   ],
     imports:[
       CommonModule,
@@ -17,7 +20,8 @@ import { PipeModule } from "src/app/pipes/pipe.module";
       FormsModule,
       ReactiveFormsModule,
       FontAwesomeModule,
-      DirectiveModule  
+      DirectiveModule,
+      NotesModule
     ],
     exports:[]
 })

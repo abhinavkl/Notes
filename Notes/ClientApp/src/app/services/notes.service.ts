@@ -1,9 +1,10 @@
 import { Inject, Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { Note } from "../components/notes/note.model";
+import { Note, NoteTag } from "../components/notes/note.model";
 import { HttpClient } from "@angular/common/http";
 import { ResponseMessage } from "../shared/response-message.model";
 import { mode } from "../shared/page-mode.model";
+import { TagService } from "./tags.service";
 
 @Injectable({providedIn:'root'})
 export class NoteService{
@@ -13,7 +14,9 @@ export class NoteService{
     noteMode=mode.none;
     status=new ResponseMessage()
 
-    constructor(private http:HttpClient,@Inject('BASE_URL') baseUrl: string){
+    constructor(private http:HttpClient,
+        @Inject('BASE_URL') baseUrl: string,
+        public tagService:TagService){
         this.baseUrl=baseUrl;
     }
 
@@ -39,7 +42,7 @@ export class NoteService{
         else{
             notes=[ note,...notes ]
         }
-        console.log(notes)
+
         this.notes.next(notes)
     }
 

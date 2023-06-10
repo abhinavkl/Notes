@@ -1,27 +1,52 @@
 <div>
     <div class="row">
         <div class="col">
-            <button class="btn btn-outline-primary m-2"
+            <button 
+                class="btn btn-outline-primary m-2"
+                (click)="addTagPopup()"    
             >Add Tag</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-3">
-            <div class="tag m-1 p-1 border border-info bg-opacity-10 bg-info text-center rounded-pill"
-            style="cursor: pointer;"
-            *ngFor="let tag of tags">
-                {{tag.tagName}}
+        <div class="col-4">
+            <div class="row align-items-center" *ngFor="let tag of tags">
+                <div class="col-9">
+                    <div [className]="'tag m-1 p-1 border bg-opacity-10 text-center rounded-pill '+(tagService.selectedTag.value?.tagId===tag.tagId?'border-warning bg-warning':'border-info bg-info')"
+                        style="cursor: pointer;"
+                        (click)="tagSelectEvent(tag)"
+                        >
+                        {{tag.tagName}}
+                    </div>
+                </div>
+                <div class="col-3" *ngIf="tagService.selectedTag.value && tagService.selectedTag.value.tagId===tag.tagId">
+                    <div class="row">
+                        <div class="col-4">
+                            <fa-icon 
+                            [icon]="viewIcon"
+                            [className]="tagService.tagMode===mode.view&&'text-warning'"
+                            (click)="updateMode(mode.view)"
+                            ></fa-icon>
+                        </div>
+                        <div class="col-4">
+                            <fa-icon 
+                            [icon]="editIcon"
+                            [className]="tagService.tagMode===mode.edit&&'text-warning'"
+                            (click)="updateMode(mode.edit)"
+                            ></fa-icon>
+                        </div>
+                        <div class="col-4">
+                            <fa-icon 
+                            [icon]="deleteIcon"
+                            [className]="tagService.tagMode===mode.delete&&'text-warning'"
+                            (click)="updateMode(mode.delete)"
+                            ></fa-icon>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-1">
-            <div class="row">
-                <div class="col-6">
-                    <fa-icon [icon]="editIcon"></fa-icon>
-                </div>
-                <div class="col-6">
-                    <fa-icon [icon]="deleteIcon"></fa-icon>
-                </div>
-            </div>
+        <div class="col-8">
+            <app-tag-details></app-tag-details>
         </div>
     </div>
 </div>

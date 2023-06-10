@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AuthService } from './auth.service';
 import { NoteService } from "./notes.service";
+import { TagService } from "./tags.service";
 
 @Injectable({providedIn:'root'})
 export class NavMenuService{
@@ -9,7 +10,8 @@ export class NavMenuService{
 
     constructor(
         public authService:AuthService,
-        private noteService:NoteService
+        private noteService:NoteService,
+        private tagService:TagService
     ){}
 
     updateTimeLeft(time:number){
@@ -21,6 +23,7 @@ export class NavMenuService{
             else{
                 this.authService.clear()
                 this.noteService.clear()
+                this.tagService.clear()
                 clearInterval(this.timer)
             }
         },1000)

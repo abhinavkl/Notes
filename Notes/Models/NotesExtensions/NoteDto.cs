@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Notes.Models.NotesExtensions;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Notes.Models.Notes

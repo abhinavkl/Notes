@@ -1,0 +1,56 @@
+<div class="mx-1">
+    <div *ngIf="tagService.selectedTag.value;else tagNotSelected">
+        <div *ngIf="tagService.tagMode===mode.view">
+            <div class="row allNotes">
+                <div class="col-5 m-1" *ngFor="let noteTag of tag?.noteTags">
+                    <app-short-note [note]="noteTag.note" [maxbodylength]="150" ></app-short-note>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="tagService.tagMode===mode.edit">
+            <form [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <label>Tag Name :</label>
+                    </div>
+                    <div class="col-3">
+                        <input type="text" class="form-control" formControlName="tagName" />
+                    </div>
+                </div>
+                <div class="row mt-2 allNotes" style="cursor: pointer;">
+                    <div [className]="'col-5 m-2 border border-5 '+(selectedNotes.includes(note.noteId)?'border-success':'border-secondary')" 
+                    *ngFor="let note of notes"
+                    (click)="updateTagNote(note)">
+                        <div class="row">
+                            <div class="col-7 fw-bold text-warning">
+                                {{note.description}}
+                            </div>
+                            <div class="col-5 fst-italic" style="font-size: xx-small;color:gray">
+                                {{note.updatedOn | updatedon }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-secondary" style="font-size:small">
+                                {{note.body | textshorter:75 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <button class="btn btn-outline-danger">
+                            {{!tag ? "Save":"Update"}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <ng-template #tagNotSelected>
+        <div class="row">
+            <div class="col mt-2">
+                Select a tag to (edit tag)/(view notes).
+            </div>
+        </div>
+    </ng-template>
+</div>

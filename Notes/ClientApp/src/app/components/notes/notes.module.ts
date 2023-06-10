@@ -25,6 +25,7 @@ import { CustomModule } from '../custom/custom.module';
     FontAwesomeModule,
     DirectiveModule,
     CustomModule
-  ]
+  ],
+  exports:[ShortNoteComponent]
 })
 export class NotesModule { }

@@ -38,7 +38,7 @@ namespace Notes.Controllers.Notes
         {
             int userId = this.User.GetUserId();
             return notesContext.Notes
-                .Include(i=>i.NoteTags).ThenInclude(i=>i.Tag)
+                .Include(i=>i.NoteTags).ThenInclude(i=>i.Tag).DefaultIfEmpty()
                 .Where(i => i.UserId == userId)
                 .OrderByDescending(i => i.CreatedOn)
                 .GetNoteDtos();
@@ -64,7 +64,7 @@ namespace Notes.Controllers.Notes
                     int userId = this.User.GetUserId();
                     note.UpdatedOn = DateTime.Now;
                     var dbNote = await notesContext.Notes
-                        .Include(i=>i.NoteTags).ThenInclude(i=>i.Tag)
+                        .Include(i=>i.NoteTags).ThenInclude(i=>i.Tag).DefaultIfEmpty()
                         .Where(i=>i.NoteId==note.NoteId).FirstOrDefaultAsync();
                     if (dbNote == null)
                     {
@@ -87,7 +87,11 @@ namespace Notes.Controllers.Notes
                             }));
 
                             var deletedTags = dbNote.NoteTagIds.Except(note.NoteTagIds);
-                            notesContext.NoteTags.RemoveRange(notesContext.NoteTags.Where(i=> i.NoteId==note.NoteId && deletedTags.Contains(i.TagId)));
+                            notesContext.NoteTags.RemoveRange(notesContext.NoteTags
+                                                            .Where(i=> i.NoteId==note.NoteId
+                                                                    && deletedTags.Contains(i.TagId)
+                                                                    )
+                                                            );
                         }
                         dbNote.UpdatedOn = note.UpdatedOn;
                     }
@@ -95,7 +99,15 @@ namespace Notes.Controllers.Notes
                     note = notesContext.Notes
                         .Include(i => i.NoteTags).ThenInclude(i => i.Tag)
                         .FirstOrDefault(i => i.NoteId == note.NoteId);
-                    message.Data = note.GetNoteDto();
+                    var tags= notesContext.Tags
+                            .Include(i => i.NoteTags).ThenInclude(i => i.Note).DefaultIfEmpty()
+                            .Where(i => i.UserId == userId)
+                            .GetTagDtos();
+                    message.Data =new
+                    {
+                        Note= note.GetNoteDto(),
+                        Tags=tags
+                    };
                 }
             }
             catch (Exception ex)

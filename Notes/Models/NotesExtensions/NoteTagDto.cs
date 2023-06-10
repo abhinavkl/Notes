@@ -1,6 +1,6 @@
 ﻿using Notes.Models.Notes;
 
-namespace Notes.Models.NotesExtensions
+namespace Notes.Models.Notes
 {
     public class NoteTagDto
     {

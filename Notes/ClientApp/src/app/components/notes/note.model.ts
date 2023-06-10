@@ -1,4 +1,4 @@
-import { Tag } from "../tags/tags/tag.model";
+import { Tag } from "../tags/tag.model";
 
 export class Note{
     constructor(

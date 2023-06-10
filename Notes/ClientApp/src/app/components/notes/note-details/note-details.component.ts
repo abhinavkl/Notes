@@ -6,7 +6,7 @@ import { ResponseMessage } from 'src/app/shared/response-message.model';
 import {mode } from '../../../shared/page-mode.model';
 import { environment } from 'src/environments/environment';
 import { TagService } from 'src/app/services/tags.service';
-import { Tag } from '../../tags/tags/tag.model';
+import { Tag } from '../../tags/tag.model';
 
 @Component({
   selector: 'app-note-details',
@@ -80,8 +80,10 @@ export class NoteDetailsComponent implements OnInit {
         this.note!.noteTagIds=this.selectedTags
         this.noteService.postNote(this.note!).subscribe(response=>{
           if(response.statusCode===1){
-            this.noteService.updateNote(response.data as Note)
+            let data=response.data as any
+            this.noteService.updateNote(data.note as Note)
             this.noteService.selectedNote.next(null)
+            this.tagService.tags.next(data.tags as Tag[])
           }
         })
     }
