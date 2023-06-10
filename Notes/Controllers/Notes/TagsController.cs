@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ITfoxtec.Identity.Saml2.Schemas;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,44 @@ namespace Notes.Controllers.Notes
                 .GetTagDtos();
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public bool CheckTag(int id,string tagName)
+        {
+            var userId = this.User.GetUserId();
+            return notesContext.Tags.Any(i => i.TagId != id && i.UserId==userId && i.TagName.Trim() == tagName.Trim());
+        }
+
+        [HttpDelete("{tagId}")]
+        public async Task<JsonResult> Delete(int tagId)
+        {
+            var message = new ResponseMessage();
+            try
+            {
+                var userId = this.User.GetUserId();
+                var tag = await notesContext.Tags.FindAsync(tagId);
+                if (tag != null)
+                {
+                    var noteTags = notesContext.NoteTags.Where(i => i.TagId == tagId);
+                    notesContext.NoteTags.RemoveRange(noteTags);
+                    notesContext.Tags.Remove(tag);
+                    notesContext.SaveChanges();
+                }
+                message.Message = "Tag deleted successfully";
+                message.Data= notesContext.Notes
+                            .Include(i => i.NoteTags).ThenInclude(i => i.Tag).DefaultIfEmpty()
+                            .Where(i => i.UserId == userId)
+                            .OrderByDescending(i => i.CreatedOn)
+                            .GetNoteDtos();
+            }
+            catch (Exception ex)
+            {
+                message.Message = ex.Message;
+                message.StatusCode = ResponseStatus.EXCEPTION;
+            }
+            return new JsonResult(message);
+        }
+
         [HttpPost]
         public async Task<JsonResult> Post(object obj)
         {
@@ -61,15 +100,20 @@ namespace Notes.Controllers.Notes
                     if(dbTag == null)
                     {
                         dbTag = new Tag();
+                        dbTag.UserId = userId;
+                        dbTag.CreatedOn = DateTime.Now;
                         notesContext.Tags.Add(dbTag);
                     }
                     dbTag.TagName = tag.TagName;
+                    dbTag.UpdatedOn = DateTime.Now;
                     if (!Enumerable.SequenceEqual(dbTag.NoteTagIds, tag.NoteTagIds))
                     {
                         dbTag.NoteTags.AddRange(tag.NoteTagIds.Except(dbTag.NoteTagIds).Select(id => new NoteTag()
                         {
                             NoteId = id,
-                            TagId = tag.TagId
+                            TagId = tag.TagId,
+                            CreatedOn= DateTime.Now,
+                            UpdatedOn=DateTime.Now
                         }));
 
                         var deletedTags = dbTag.NoteTagIds.Except(tag.NoteTagIds);

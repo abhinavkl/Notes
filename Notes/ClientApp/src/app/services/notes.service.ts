@@ -46,7 +46,7 @@ export class NoteService{
         this.notes.next(notes)
     }
 
-    deleteNode(){
+    deleteNote(){
         let noteId=this.selectedNote.value!.noteId
         return this.http.delete<ResponseMessage>(this.baseUrl+'api/notes/'+noteId)
     }

@@ -83,7 +83,9 @@ namespace Notes.Controllers.Notes
                             dbNote.NoteTags.AddRange(note.NoteTagIds.Except(dbNote.NoteTagIds).Select(id=> new NoteTag()
                             {
                                 NoteId=note.NoteId,
-                                TagId=id
+                                TagId=id,
+                                CreatedOn=DateTime.Now,
+                                UpdatedOn=DateTime.Now
                             }));
 
                             var deletedTags = dbNote.NoteTagIds.Except(note.NoteTagIds);
@@ -125,13 +127,21 @@ namespace Notes.Controllers.Notes
             var message = new ResponseMessage();
             try
             {
+                var userId=this.User.GetUserId();
                 var note = await notesContext.Notes.FindAsync(noteId);
                 if (note != null)
                 {
+                    var noteTags = notesContext.NoteTags.Where(i => i.NoteId == noteId);
+                    notesContext.NoteTags.RemoveRange(noteTags);
+
                     notesContext.Notes.Remove(note);
                     notesContext.SaveChanges();
                 }
                 message.Message = "Note deleted successfully";
+                message.Data = notesContext.Tags
+                            .Include(i => i.NoteTags).ThenInclude(i => i.Note).DefaultIfEmpty()
+                            .Where(i => i.UserId == userId)
+                            .GetTagDtos();
             }
             catch (Exception ex)
             {

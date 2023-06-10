@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { Tag } from "../components/tags/tag.model";
 import { BehaviorSubject } from "rxjs";
@@ -15,6 +15,13 @@ export class TagService{
 
     constructor(private http:HttpClient,@Inject('BASE_URL') baseUrl: string){
         this.baseUrl=baseUrl;
+    }
+
+    getTag(id:number,tagName:string){
+        let queryParams=new HttpParams()
+        queryParams=queryParams.append('id',id)
+        queryParams=queryParams.append('tagName',tagName)
+        return this.http.get(this.baseUrl+'api/tags/checktag',{  params:queryParams })
     }
 
     getTags(){
@@ -47,6 +54,18 @@ export class TagService{
         this.tags.next(tags)
     }
 
+    removeTag(tagId:number){
+        let tags=this.tags.value
+        let index=tags.findIndex(tag=>tag.tagId===tagId)
+        if(index!==-1){
+            tags.splice(index,1)
+            this.tags.next(tags)
+        }
+    }
+
+    deleteTag(tagId:number){
+        return this.http.delete<ResponseMessage>(this.baseUrl+'api/tags/'+tagId)
+    }
 
     clear(){
         this.tags.next([])

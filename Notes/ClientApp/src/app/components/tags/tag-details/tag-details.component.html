@@ -1,9 +1,9 @@
 <div class="mx-1">
-    <div *ngIf="tagService.selectedTag.value;else tagNotSelected">
+    <div *ngIf="tagService.selectedTag.value || tagService.tagMode===mode.edit;else tagNotSelected">
         <div *ngIf="tagService.tagMode===mode.view">
             <div class="row allNotes">
                 <div class="col-5 m-1" *ngFor="let noteTag of tag?.noteTags">
-                    <app-short-note [note]="noteTag.note" [maxbodylength]="150" ></app-short-note>
+                    <app-short-note [note]="noteTag.note" [maxbodylength]="150"></app-short-note>
                 </div>
             </div>
         </div>
@@ -14,13 +14,27 @@
                         <label>Tag Name :</label>
                     </div>
                     <div class="col-3">
-                        <input type="text" class="form-control" formControlName="tagName" />
+                        <input type="text" 
+                               class="form-control" 
+                               formControlName="tagName" 
+                               (focus)="showTagErrors=false"
+                            (blur)="showTagErrors=true;" />
+                        <div *ngIf="showTagErrors && tagForm.get('tagName')!.touched && !tagForm.get('tagName')!.valid && tagForm.get('tagName')!.errors">
+                            <span class="text-danger" *ngIf="tagForm.get('tagName')!.errors!.maxlength">
+                                Tag Name cannot exceed 20 characters.
+                            </span>
+                            <span class="text-danger" *ngIf="tagForm.get('tagName')!.errors!.pattern">
+                                Tag Name contains invalid characters.
+                            </span>
+                            <span class="text-danger" *ngIf="tagForm.get('tagName')!.errors!.uniqueTagName">
+                                Tag Name already exists.
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-2 allNotes" style="cursor: pointer;">
-                    <div [className]="'col-5 m-2 border border-5 '+(selectedNotes.includes(note.noteId)?'border-success':'border-secondary')" 
-                    *ngFor="let note of notes"
-                    (click)="updateTagNote(note)">
+                    <div [className]="'col-5 m-2 border border-5 '+(selectedNotes.includes(note.noteId)?'border-success':'border-secondary')"
+                        *ngFor="let note of notes" (click)="updateTagNote(note)">
                         <div class="row">
                             <div class="col-7 fw-bold text-warning">
                                 {{note.description}}
@@ -38,7 +52,9 @@
                 </div>
                 <div class="row">
                     <div class="col-2">
-                        <button class="btn btn-outline-danger">
+                        <button class="btn btn-outline-danger"
+                            [disabled]="showTagErrors && tagForm.get('tagName')!.errors"
+                        >
                             {{!tag ? "Save":"Update"}}
                         </button>
                     </div>

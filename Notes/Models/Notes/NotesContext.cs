@@ -49,6 +49,10 @@ namespace Notes.Models.Notes
             {
                 entity.ToTable("NoteTag");
 
+                entity.Property(e => e.CreatedOn).HasColumnType("date");
+
+                entity.Property(e => e.UpdatedOn).HasColumnType("date");
+
                 entity.HasOne(d => d.Note)
                     .WithMany(p => p.NoteTags)
                     .HasForeignKey(d => d.NoteId)
@@ -66,9 +70,13 @@ namespace Notes.Models.Notes
             {
                 entity.ToTable("Tag");
 
+                entity.Property(e => e.CreatedOn).HasColumnType("date");
+
                 entity.Property(e => e.TagName)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.UpdatedOn).HasColumnType("date");
             });
 
             OnModelCreatingPartial(modelBuilder);

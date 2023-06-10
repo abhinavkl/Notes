@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h4 class="modal-title">Hi there!</h4>
+    <button type="button" class="btn-close" aria-describedby="modal-title" (click)="closeClick()"></button>
+</div>
+<div class="modal-body">
+    Are you sure ? Do you want to delete {{ tag.tagName }}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="closeClick()">No</button>
+    <button type="submit" class="btn btn-outline-success" (click)="deleteTag()">Yes</button>
+</div>

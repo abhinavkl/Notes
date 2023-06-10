@@ -27,7 +27,7 @@ namespace Notes.Data
 
         public static int GetUserId(this ClaimsPrincipal claimsPrincipal)
         {
-            var userId=claimsPrincipal.Claims.FirstOrDefault(i => i.Type == "UserId").Value;
+            var userId=claimsPrincipal.Claims.FirstOrDefault(i => i.Type == "UserId")?.Value;
             return Convert.ToInt32(userId);
         }
 

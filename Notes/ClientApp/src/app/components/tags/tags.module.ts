@@ -7,12 +7,14 @@ import { DirectiveModule } from "src/app/directives/directive.module";
 import { PipeModule } from "src/app/pipes/pipe.module";
 import { TagDetailsComponent } from './tag-details/tag-details.component';
 import { NotesModule } from "../notes/notes.module";
+import { TagDeleteComponent } from './tag-delete/tag-delete.component';
 
 
 @NgModule({
     declarations:[
     TagsComponent,
-    TagDetailsComponent
+    TagDetailsComponent,
+    TagDeleteComponent
   ],
     imports:[
       CommonModule,
